@@ -114,11 +114,14 @@ export function getTypeFromFileName(
 }
 
 export function generateUploadThingURL(path: `/${string}`) {
-  let host = "https://uploadthing.com";
-  if (process.env.CUSTOM_INFRA_URL) {
-    host = process.env.CUSTOM_INFRA_URL;
-  }
-  return `${host}${path}`;
+	let base;
+	if (process.env.VERCEL_URL) {
+		base = `https://${process.env.VERCEL_URL}`;
+	} else {
+		base = "http://localhost:3000";
+	}
+
+	return `${base}${process.env.UPLOADTHING_INFRA_PATH}${path}`;
 }
 
 /**
